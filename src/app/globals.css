@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: #FDFBF7; /* Warm cream */
+    --bg-secondary: #FAF6ED;
+    --bg-card: rgba(255, 255, 255, 0.85);
+    --bg-glass: rgba(255, 255, 255, 0.65);
+    --border-subtle: rgba(230, 220, 205, 0.6);
+    --border-accent: rgba(203, 189, 232, 0.5);
+    --text-primary: #2D2A32;
+    --text-secondary: #6B6572;
+    --text-muted: #9C94A6;
+    
+    /* Accents */
+    --accent-lavender: #CBBDE8;
+    --accent-rose: #EAB5BF;
+    --accent-peach: #FFC6A6;
+    --accent-sage: #B2CCB8;
+    --accent-blue: #BCE0F5;
+  }
+
+  .dark {
+    --bg-primary: #121318; /* Deep charcoal */
+    --bg-secondary: #171821;
+    --bg-card: rgba(26, 27, 36, 0.82);
+    --bg-glass: rgba(22, 23, 31, 0.72);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-accent: rgba(167, 139, 250, 0.25);
+    --text-primary: #F3F4F6;
+    --text-secondary: #A6A4B2;
+    --text-muted: #6C6A7B;
+
+    /* Dark Accents */
+    --accent-lavender: #A78BFA;
+    --accent-rose: #F472B6;
+    --accent-peach: #FB923C;
+    --accent-sage: #86EFAC;
+    --accent-blue: #60A5FA;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(180, 170, 195, 0.35);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(180, 170, 195, 0.6);
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+}
+
+.glass-dropdown {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-accent);
+}
+
+/* Soft aesthetic gradient texts */
+.gradient-text-aura {
+  background: linear-gradient(135deg, #9474CB 0%, #DD8E9E 50%, #FFA57A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-cinema {
+  background: linear-gradient(135deg, #F472B6 0%, #A78BFA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Movie film perforation texture border */
+.film-perforation {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.15) 2px, transparent 2px);
+  background-size: 14px 14px;
+}
