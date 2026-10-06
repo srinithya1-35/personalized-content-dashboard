@@ -17,32 +17,28 @@ export default function AudioPlayer() {
   const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
     if (track && track.audioPreviewUrl) {
-      if (audioRef.current) {
-        audioRef.current.src = track.audioPreviewUrl;
-        audioRef.current.play().then(() => {
-          dispatch(setIsPlayingAudio(true));
-        }).catch((err) => {
+      if (audio.src !== track.audioPreviewUrl) {
+        audio.src = track.audioPreviewUrl;
+      }
+      if (isPlaying) {
+        audio.play().catch((err) => {
           console.warn('[AudioPlayer] Playback blocked or source unavailable:', err);
+          dispatch(setIsPlayingAudio(false));
         });
+      } else {
+        audio.pause();
       }
     } else {
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
+      audio.pause();
     }
-  }, [track, dispatch]);
+  }, [track, isPlaying, dispatch]);
 
   const togglePlay = () => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-      dispatch(setIsPlayingAudio(false));
-    } else {
-      audioRef.current.play().then(() => {
-        dispatch(setIsPlayingAudio(true));
-      }).catch((e) => console.warn(e));
-    }
+    dispatch(setIsPlayingAudio(!isPlaying));
   };
 
   const handleTimeUpdate = () => {
