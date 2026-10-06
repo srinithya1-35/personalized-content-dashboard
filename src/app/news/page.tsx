@@ -49,23 +49,27 @@ export default function NewsPage() {
     <AppShell>
       <div className="space-y-8 pb-12">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-neutral-200/50 dark:border-neutral-800">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-rose-100 dark:bg-rose-950/60 text-rose-500 flex items-center justify-center shadow-soft">
-              <Newspaper className="w-5 h-5" />
+        <div className="space-y-4 pb-2 border-b border-neutral-200/50 dark:border-neutral-800">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-rose-100 dark:bg-rose-950/60 text-rose-500 flex items-center justify-center shadow-soft shrink-0">
+                <Newspaper className="w-5 h-5" />
+              </div>
+              <div>
+                <h1 className="text-xl sm:text-2xl font-extrabold text-neutral-900 dark:text-neutral-50">
+                  Editorial Magazine &amp; News
+                </h1>
+                <p className="text-xs text-neutral-400">
+                  ISRO space exploration, Bengaluru &amp; Hyderabad AI tech, heritage arts and national developments 📰🇮🇳
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-2xl font-extrabold text-neutral-900 dark:text-neutral-50">
-                Editorial Magazine &amp; News
-              </h1>
-              <p className="text-xs text-neutral-400">
-                ISRO space exploration, Bengaluru &amp; Hyderabad AI tech, heritage arts and national developments 📰🇮🇳
-              </p>
+
+            {/* Language Selector Pills */}
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+              <LanguageSelector variant="pills" />
             </div>
           </div>
-
-          {/* Language Selector Pills */}
-          <LanguageSelector variant="pills" />
         </div>
 
         {/* Category Pills */}
@@ -83,7 +87,7 @@ export default function NewsPage() {
 
         {/* Content */}
         {status === 'loading' && newsItems.length === 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             <CardSkeleton type="news" count={8} />
           </div>
         ) : status === 'failed' && newsItems.length === 0 ? (
@@ -107,7 +111,7 @@ export default function NewsPage() {
           />
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
               {newsItems.map((item) => (
                 <NewsCard key={item.id} item={item} />
               ))}

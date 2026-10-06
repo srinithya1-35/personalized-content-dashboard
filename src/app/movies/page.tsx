@@ -48,27 +48,33 @@ export default function MoviesPage() {
     <AppShell>
       <div className="space-y-8 pb-12">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-neutral-200/50 dark:border-neutral-800">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-lavender-100 dark:bg-plum-900/60 text-lavender-600 dark:text-lavender-300 flex items-center justify-center shadow-soft">
-              <Film className="w-5 h-5" />
+        <div className="space-y-4 pb-2 border-b border-neutral-200/50 dark:border-neutral-800">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-lavender-100 dark:bg-plum-900/60 text-lavender-600 dark:text-lavender-300 flex items-center justify-center shadow-soft shrink-0">
+                <Film className="w-5 h-5" />
+              </div>
+              <div>
+                <h1 className="text-xl sm:text-2xl font-extrabold text-neutral-900 dark:text-neutral-50">
+                  Cinema Reels &amp; Film Strips
+                </h1>
+                <p className="text-xs text-neutral-400">
+                  Indian cinematic masterpieces, Pan-India epics, regional folklore &amp; timeless classics 🎞️🍿
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-2xl font-extrabold text-neutral-900 dark:text-neutral-50">
-                Cinema Reels &amp; Film Strips
-              </h1>
-              <p className="text-xs text-neutral-400">
-                Indian cinematic masterpieces, Pan-India epics, regional folklore &amp; timeless classics 🎞️🍿
-              </p>
-            </div>
-          </div>
 
-          <div className="flex items-center gap-3">
-            <LanguageSelector variant="pills" />
+            {/* Language filter pills */}
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+              <LanguageSelector variant="pills" />
+            </div>
           </div>
 
           {/* Genre Filters */}
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 shrink-0">
+              Genre:
+            </span>
             {[
               { id: 'all', label: 'All Cinema' },
               { id: 'Folklore', label: '🪔 Folklore & Myth' },
@@ -80,7 +86,7 @@ export default function MoviesPage() {
               <button
                 key={tab.id}
                 onClick={() => setGenreFilter(tab.id)}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all shrink-0 ${
                   genreFilter === tab.id
                     ? 'bg-lavender-600 text-white shadow-sm'
                     : 'bg-white/70 dark:bg-charcoal-800 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-charcoal-700'
@@ -93,13 +99,13 @@ export default function MoviesPage() {
         </div>
 
         {/* Cinematic Film Reel Banner */}
-        <div className="relative overflow-hidden rounded-3xl p-6 bg-gradient-to-r from-charcoal-900 via-plum-950 to-charcoal-900 border border-neutral-800 text-white flex items-center justify-between shadow-soft-lg">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl p-4 sm:p-6 bg-gradient-to-r from-charcoal-900 via-plum-950 to-charcoal-900 border border-neutral-800 text-white flex items-center justify-between shadow-soft-lg">
           <div className="space-y-1 z-10 max-w-lg">
             <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] font-bold bg-lavender-500/20 text-lavender-300 border border-lavender-500/30">
               <Clapperboard className="w-3.5 h-3.5" />
               <span>TMDB Verified Discovery</span>
             </div>
-            <h3 className="text-lg font-bold">Featured 70mm Visual Journeys</h3>
+            <h3 className="text-base sm:text-lg font-bold">Featured 70mm Visual Journeys</h3>
             <p className="text-xs text-neutral-400">
               Explore films with high critical ratings and poetic visual cinematography.
             </p>
@@ -111,7 +117,7 @@ export default function MoviesPage() {
 
         {/* Content Grid */}
         {status === 'loading' && movieItems.length === 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             <CardSkeleton type="movie" count={8} />
           </div>
         ) : status === 'failed' && movieItems.length === 0 ? (

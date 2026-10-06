@@ -112,8 +112,8 @@ export default function MusicCard({ item }: MusicCardProps) {
       </div>
 
       {/* Footer Details & Favorite */}
-      <div className="mt-4 pt-3 border-t border-peach-200/40 dark:border-neutral-800 flex items-center justify-between">
-        <span className="text-[11px] text-neutral-400 italic truncate max-w-[170px]">
+      <div className="mt-4 pt-3 border-t border-peach-200/40 dark:border-neutral-800 flex items-center justify-between gap-2">
+        <span className="text-[11px] text-neutral-400 italic truncate flex-1 min-w-0">
           {item.album}
         </span>
 

@@ -54,27 +54,33 @@ export default function MusicPage() {
     <AppShell>
       <div className="space-y-8 pb-12">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-neutral-200/50 dark:border-neutral-800">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-peach-100 dark:bg-peach-950/60 text-peach-600 dark:text-peach-300 flex items-center justify-center shadow-soft">
-              <Music className="w-5 h-5" />
+        <div className="space-y-4 pb-2 border-b border-neutral-200/50 dark:border-neutral-800">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-peach-100 dark:bg-peach-950/60 text-peach-600 dark:text-peach-300 flex items-center justify-center shadow-soft shrink-0">
+                <Music className="w-5 h-5" />
+              </div>
+              <div>
+                <h1 className="text-xl sm:text-2xl font-extrabold text-neutral-900 dark:text-neutral-50">
+                  Indian Music &amp; Audio Discovery
+                </h1>
+                <p className="text-xs text-neutral-400">
+                  Regional melodies, Carnatic veena fusion, soulful sufi numbers &amp; relaxing flute raga previews 🪔🎶
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-2xl font-extrabold text-neutral-900 dark:text-neutral-50">
-                Indian Music &amp; Audio Discovery
-              </h1>
-              <p className="text-xs text-neutral-400">
-                Regional melodies, Carnatic veena fusion, soulful sufi numbers &amp; relaxing flute raga previews 🪔🎶
-              </p>
-            </div>
-          </div>
 
-          <div className="flex items-center gap-3">
-            <LanguageSelector variant="pills" />
+            {/* Language filter pills */}
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+              <LanguageSelector variant="pills" />
+            </div>
           </div>
 
           {/* Mood / Vibe Filters */}
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 shrink-0">
+              Vibe:
+            </span>
             {[
               { id: 'all', label: '🌸 All Vibes' },
               { id: 'music', label: '🪔 Soulful & Raga' },
@@ -85,7 +91,7 @@ export default function MusicPage() {
               <button
                 key={tab.id}
                 onClick={() => setMoodFilter(tab.id)}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all shrink-0 ${
                   moodFilter === tab.id
                     ? 'bg-peach-500 text-white shadow-sm'
                     : 'bg-white/70 dark:bg-charcoal-800 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-charcoal-700'
@@ -98,13 +104,13 @@ export default function MusicPage() {
         </div>
 
         {/* Cozy Hero Audio Card */}
-        <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-peach-100 via-rose-100 to-lavender-100 dark:from-charcoal-850 dark:via-plum-950 dark:to-charcoal-900 border border-peach-200/60 dark:border-plum-800 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-soft">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 bg-gradient-to-r from-peach-100 via-rose-100 to-lavender-100 dark:from-charcoal-850 dark:via-plum-950 dark:to-charcoal-900 border border-peach-200/60 dark:border-plum-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 shadow-soft">
           <div className="space-y-2 max-w-lg z-10">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white/80 dark:bg-charcoal-800/80 text-peach-700 dark:text-peach-300 backdrop-blur-md shadow-xs">
               <Sparkles className="w-3.5 h-3.5 text-peach-500" />
               <span>🌸 Made For You Session</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-lg sm:text-2xl font-bold text-neutral-900 dark:text-neutral-100 leading-snug">
               Gentle Raindrops &amp; Green Tea Sanctuary
             </h2>
             <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
@@ -114,7 +120,7 @@ export default function MusicPage() {
 
           <button
             onClick={handlePlayFirst}
-            className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-bold bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 hover:scale-105 active:scale-95 transition-all shadow-md shrink-0 self-start sm:self-center"
+            className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs font-bold bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 hover:scale-105 active:scale-95 transition-all shadow-md shrink-0 self-start sm:self-center"
           >
             <Play className="w-4 h-4 fill-current" />
             <span>Play First Track</span>
@@ -123,7 +129,7 @@ export default function MusicPage() {
 
         {/* Content Grid */}
         {status === 'loading' && musicItems.length === 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             <CardSkeleton type="music" count={8} />
           </div>
         ) : status === 'failed' && musicItems.length === 0 ? (
@@ -147,7 +153,7 @@ export default function MusicPage() {
           />
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
               {musicItems.map((item) => (
                 <MusicCard key={item.id} item={item} />
               ))}

@@ -177,15 +177,15 @@ export default function InstagramStoriesTray() {
   return (
     <>
       {/* Horizontal Stories Tray */}
-      <div className="relative py-3 px-1 border-b border-neutral-200/60 dark:border-neutral-800 bg-white/50 dark:bg-charcoal-900/50 backdrop-blur-md rounded-3xl">
-        <div className="flex items-center gap-4 overflow-x-auto no-scrollbar px-3">
+      <div className="relative py-2.5 sm:py-3 px-1 border-b border-neutral-200/60 dark:border-neutral-800 bg-white/50 dark:bg-charcoal-900/50 backdrop-blur-md rounded-2xl sm:rounded-3xl">
+        <div className="flex items-center gap-3 sm:gap-4 overflow-x-auto no-scrollbar px-2 sm:px-3">
           {/* Your Story (Sathyabhama) */}
           <button
             onClick={() => openStory(0)}
             className="flex flex-col items-center gap-1.5 shrink-0 group focus:outline-none"
           >
             <div className="relative">
-              <div className="w-16 h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 group-hover:scale-105 transition-transform">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2px] sm:p-[2.5px] bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 group-hover:scale-105 transition-transform">
                 <div className="w-full h-full rounded-full overflow-hidden p-0.5 bg-white dark:bg-charcoal-900">
                   <img
                     src={profile.avatar}
@@ -194,11 +194,11 @@ export default function InstagramStoriesTray() {
                   />
                 </div>
               </div>
-              <div className="absolute bottom-0 right-0 w-5 h-5 bg-sage-600 text-white rounded-full flex items-center justify-center border-2 border-white dark:border-charcoal-900 shadow-sm">
-                <Plus className="w-3 h-3 stroke-[3]" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 sm:w-5 sm:h-5 bg-sage-600 text-white rounded-full flex items-center justify-center border-2 border-white dark:border-charcoal-900 shadow-sm">
+                <Plus className="w-2.5 h-2.5 sm:w-3 sm:h-3 stroke-[3]" />
               </div>
             </div>
-            <span className="text-[11px] font-semibold text-neutral-700 dark:text-neutral-200 truncate max-w-[72px]">
+            <span className="text-[10px] sm:text-[11px] font-semibold text-neutral-700 dark:text-neutral-200 truncate max-w-[64px] sm:max-w-[72px]">
               Your Story
             </span>
           </button>
@@ -212,7 +212,7 @@ export default function InstagramStoriesTray() {
                 onClick={() => openStory(actualIndex)}
                 className="flex flex-col items-center gap-1.5 shrink-0 group focus:outline-none"
               >
-                <div className="w-16 h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 group-hover:scale-105 transition-transform">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2px] sm:p-[2.5px] bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 group-hover:scale-105 transition-transform">
                   <div className="w-full h-full rounded-full overflow-hidden p-0.5 bg-white dark:bg-charcoal-900">
                     <img
                       src={story.creatorAvatar}
@@ -239,14 +239,29 @@ export default function InstagramStoriesTray() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-2 sm:p-4"
           >
-            {/* Story Container (Phone Aspect Ratio) */}
-            <div
-              className="relative w-full max-w-sm h-[85vh] max-h-[780px] bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between"
-              onMouseDown={() => setIsPaused(true)}
-              onMouseUp={() => setIsPaused(false)}
-              onTouchStart={() => setIsPaused(true)}
-              onTouchEnd={() => setIsPaused(false)}
-            >
+            {/* Outer relative wrapper for navigation arrows */}
+            <div className="relative flex items-center justify-center">
+              {/* Desktop Prev Navigation Arrow */}
+              {activeStoryIndex! > 0 && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePrev();
+                  }}
+                  className="hidden md:flex absolute -left-14 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white items-center justify-center transition-colors"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+              )}
+
+              {/* Story Container (Phone Aspect Ratio) */}
+              <div
+                className="relative w-full max-w-sm h-[85vh] max-h-[780px] bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between"
+                onMouseDown={() => setIsPaused(true)}
+                onMouseUp={() => setIsPaused(false)}
+                onTouchStart={() => setIsPaused(true)}
+                onTouchEnd={() => setIsPaused(false)}
+              >
               {/* Background Media */}
               <img
                 src={activeStory.mediaUrl}
@@ -365,27 +380,18 @@ export default function InstagramStoriesTray() {
                 )}
               </div>
 
-              {/* Desktop Prev / Next Navigation Arrows */}
-              {activeStoryIndex! > 0 && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handlePrev();
-                  }}
-                  className="hidden sm:flex absolute -left-12 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/20 hover:bg-white/40 text-white items-center justify-center transition-colors"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-              )}
+              </div>
+
+              {/* Desktop Next Navigation Arrow */}
               {activeStoryIndex! < stories.length - 1 && (
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     handleNext();
                   }}
-                  className="hidden sm:flex absolute -right-12 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/20 hover:bg-white/40 text-white items-center justify-center transition-colors"
+                  className="hidden md:flex absolute -right-14 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white items-center justify-center transition-colors"
                 >
-                  <ChevronRight className="w-5 h-5" />
+                  <ChevronRight className="w-6 h-6" />
                 </button>
               )}
             </div>

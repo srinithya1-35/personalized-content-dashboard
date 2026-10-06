@@ -29,7 +29,7 @@ export default function DashboardPage() {
     <AppShell>
       <div className="space-y-10 pb-12">
         {/* Welcome Hero Banner */}
-        <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-cream-100 via-peach-50 to-lavender-50 dark:from-charcoal-900 dark:via-charcoal-850 dark:to-plum-950/70 border border-neutral-200/60 dark:border-neutral-800 shadow-soft">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl p-4 sm:p-8 bg-gradient-to-r from-cream-100 via-peach-50 to-lavender-50 dark:from-charcoal-900 dark:via-charcoal-850 dark:to-plum-950/70 border border-neutral-200/60 dark:border-neutral-800 shadow-soft">
           <div className="relative z-10 max-w-2xl space-y-3">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white/80 dark:bg-charcoal-800/80 text-lavender-700 dark:text-lavender-300 backdrop-blur-md shadow-xs">
               <Sparkles className="w-3.5 h-3.5 text-lavender-500" />

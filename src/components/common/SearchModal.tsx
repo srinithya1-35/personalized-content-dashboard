@@ -95,7 +95,7 @@ export default function SearchModal() {
               autoFocus
               value={rawQuery}
               onChange={(e) => dispatch(setRawQuery(e.target.value))}
-              placeholder="Search news, movies, music, aesthetic posts... (Try 'Kyoto', 'AI', 'Pottery')"
+              placeholder="Search news, movies, music, aesthetic posts... (e.g. 'Kantara', 'Veena', 'ISRO')"
               className="flex-1 bg-transparent text-sm sm:text-base text-neutral-800 dark:text-neutral-100 placeholder:text-neutral-400 focus:outline-none"
             />
             {status === 'loading' && (

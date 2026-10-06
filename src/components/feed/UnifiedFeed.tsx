@@ -77,7 +77,7 @@ export default function UnifiedFeed() {
 
   if (feedStatus === 'loading' && orderedItems.length === 0) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
         <CardSkeleton count={8} />
       </div>
     );
@@ -134,7 +134,7 @@ export default function UnifiedFeed() {
         axis="y"
         values={orderedItems}
         onReorder={handleReorder}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 list-none"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 list-none"
       >
         {orderedItems.map((item) => (
           <Reorder.Item

@@ -69,11 +69,13 @@ export default function SocialPage() {
           </div>
 
           {/* Right controls: Language + Feed/Grid Switcher */}
-          <div className="flex items-center gap-3">
-            <LanguageSelector variant="pills" />
+          <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2.5 sm:gap-3">
+            <div className="overflow-x-auto no-scrollbar py-0.5">
+              <LanguageSelector variant="pills" />
+            </div>
 
             {/* Instagram View Mode Switcher */}
-            <div className="flex items-center p-1 rounded-2xl bg-neutral-100 dark:bg-charcoal-800 border border-neutral-200/60 dark:border-neutral-700">
+            <div className="flex items-center p-1 rounded-2xl bg-neutral-100 dark:bg-charcoal-800 border border-neutral-200/60 dark:border-neutral-700 shrink-0">
               <button
                 onClick={() => setViewMode('feed')}
                 aria-label="Feed View"
