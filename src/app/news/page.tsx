@@ -59,7 +59,7 @@ export default function NewsPage() {
                 Editorial Magazine &amp; News
               </h1>
               <p className="text-xs text-neutral-400">
-                Longform journalism, tech architecture, sustainable fashion &amp; cultural reporting
+                ISRO space exploration, Bengaluru &amp; Hyderabad AI tech, heritage arts and national developments 📰🇮🇳
               </p>
             </div>
           </div>

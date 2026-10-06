@@ -17,6 +17,14 @@ export default function ProfileModal() {
   const [bio, setBio] = useState(profile.bio);
   const [savedSuccess, setSavedSuccess] = useState(false);
 
+  React.useEffect(() => {
+    if (isOpen) {
+      setName(profile.name);
+      setHandle(profile.handle);
+      setBio(profile.bio);
+    }
+  }, [isOpen, profile]);
+
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {

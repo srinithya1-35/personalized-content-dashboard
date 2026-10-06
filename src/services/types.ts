@@ -69,6 +69,15 @@ export interface MusicContentItem extends BaseContentItem {
   moodTag?: string; // e.g. "🌸 Cozy & Dreamy", "🌿 Chill Nature"
 }
 
+export interface SocialComment {
+  id: string;
+  author: string;
+  handle: string;
+  avatar?: string;
+  text: string;
+  createdAt: string;
+}
+
 export interface SocialContentItem extends BaseContentItem {
   type: 'social';
   author: {
@@ -79,6 +88,8 @@ export interface SocialContentItem extends BaseContentItem {
   likes: number;
   commentsCount: number;
   hashtags: string[];
+  location?: string;
+  commentsList?: SocialComment[];
 }
 
 export type ContentItem =

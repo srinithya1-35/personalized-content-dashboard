@@ -41,7 +41,7 @@ export default function DashboardPage() {
             </h1>
 
             <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
-              Curated stories, cinema reels, lo-fi previews, and creative community posts tailored to your active passions.
+              Curated Indian cinema, classical melodies, cultural news, and artisan lifestyle moments tailored to your active passions 🪔✨
             </p>
 
             {/* Language Selector Bar */}

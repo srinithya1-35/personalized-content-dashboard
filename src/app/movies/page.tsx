@@ -58,7 +58,7 @@ export default function MoviesPage() {
                 Cinema Reels &amp; Film Strips
               </h1>
               <p className="text-xs text-neutral-400">
-                Cinematographic masterpieces, deep space odysseys, slow cinema &amp; TMDB recommendations
+                Indian cinematic masterpieces, Pan-India epics, regional folklore &amp; timeless classics 🎞️🍿
               </p>
             </div>
           </div>
@@ -71,10 +71,11 @@ export default function MoviesPage() {
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
             {[
               { id: 'all', label: 'All Cinema' },
-              { id: 'Sci-Fi', label: '🪐 Sci-Fi' },
+              { id: 'Folklore', label: '🪔 Folklore & Myth' },
+              { id: 'Action', label: '⚡ Epic & Action' },
               { id: 'Drama', label: '🎭 Drama' },
-              { id: 'Art', label: '🎨 Art House' },
-              { id: 'Adventure', label: '🏔️ Adventure' },
+              { id: 'Romance', label: '🌸 Romance' },
+              { id: 'Sports', label: '🏏 Sports' },
             ].map((tab) => (
               <button
                 key={tab.id}

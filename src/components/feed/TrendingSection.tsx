@@ -12,13 +12,14 @@ export default function TrendingSection() {
   const dispatch = useAppDispatch();
   const trendingItems = useAppSelector((state) => state.content.trendingItems);
   const trendingStatus = useAppSelector((state) => state.content.trendingStatus);
+  const selectedLanguage = useAppSelector(
+    (state) => state.preferences.selectedLanguage
+  );
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (trendingItems.length === 0) {
-      dispatch(fetchTrendingSection());
-    }
-  }, [trendingItems.length, dispatch]);
+    dispatch(fetchTrendingSection());
+  }, [selectedLanguage, dispatch]);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {

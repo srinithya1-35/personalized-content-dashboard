@@ -6,10 +6,10 @@ const USER_STORAGE_KEY = 'aura_user_profile';
 
 const DEFAULT_USER: UserProfile = {
   id: 'usr-108',
-  name: 'Aurelia Song',
-  handle: '@aurelia.studio',
-  avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop',
-  bio: 'Ceramicist, ambient audio curator & creative technologist based in Kyoto 🌸',
+  name: 'Sathyabhama',
+  handle: '@sathyabhama.creative',
+  avatar: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=80&w=400&auto=format&fit=crop',
+  bio: 'Classical arts connoisseur, filter coffee rituals, heritage textiles & exploring timeless Indian traditions 🪔🌸',
   joinedDate: 'October 2025',
   isLoggedIn: true,
 };
@@ -19,8 +19,17 @@ interface UserState {
   isProfileModalOpen: boolean;
 }
 
+const getInitialProfile = (): UserProfile => {
+  const stored = storageService.getItem<UserProfile>(USER_STORAGE_KEY, DEFAULT_USER);
+  if (!stored || !stored.name || stored.name.toLowerCase().includes('aurelia')) {
+    storageService.setItem(USER_STORAGE_KEY, DEFAULT_USER);
+    return DEFAULT_USER;
+  }
+  return stored;
+};
+
 const initialState: UserState = {
-  profile: storageService.getItem<UserProfile>(USER_STORAGE_KEY, DEFAULT_USER),
+  profile: getInitialProfile(),
   isProfileModalOpen: false,
 };
 

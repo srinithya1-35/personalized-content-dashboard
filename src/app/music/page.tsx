@@ -61,10 +61,10 @@ export default function MusicPage() {
             </div>
             <div>
               <h1 className="text-2xl font-extrabold text-neutral-900 dark:text-neutral-50">
-                Cozy Music &amp; Audio Discovery
+                Indian Music &amp; Audio Discovery
               </h1>
               <p className="text-xs text-neutral-400">
-                Delicate tape loops, ambient Rhodes, lo-fi beats &amp; botanical soundscapes with audio preview player
+                Regional melodies, Carnatic veena fusion, soulful sufi numbers &amp; relaxing flute raga previews 🪔🎶
               </p>
             </div>
           </div>
@@ -77,10 +77,10 @@ export default function MusicPage() {
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
             {[
               { id: 'all', label: '🌸 All Vibes' },
-              { id: 'music', label: '🌿 Lo-Fi Chill' },
-              { id: 'lifestyle', label: '☕ Morning Focus' },
-              { id: 'art', label: '🐼 Panda Meadow' },
-              { id: 'fitness', label: '🏔️ Cardio Rhythm' },
+              { id: 'music', label: '🪔 Soulful & Raga' },
+              { id: 'lifestyle', label: '☕ Morning Chai & Sitar' },
+              { id: 'art', label: '🎻 Classical & Veena' },
+              { id: 'entertainment', label: '🔥 Energetic Beats' },
             ].map((tab) => (
               <button
                 key={tab.id}

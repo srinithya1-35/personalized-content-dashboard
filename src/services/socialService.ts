@@ -1,4 +1,4 @@
-import { SocialContentItem, Category, SupportedLanguage } from './types';
+import { SocialContentItem, SocialComment, Category, SupportedLanguage } from './types';
 import { mockSocialData } from '@/mock/socialData';
 
 export interface FetchSocialParams {
@@ -54,6 +54,7 @@ export const socialService = {
           s.description.toLowerCase().includes(q) ||
           s.author.name.toLowerCase().includes(q) ||
           s.author.handle.toLowerCase().includes(q) ||
+          (s.location && s.location.toLowerCase().includes(q)) ||
           s.hashtags.some((h) => h.toLowerCase().includes(q))
       );
     }
@@ -77,5 +78,26 @@ export const socialService = {
     }
     post.likes += 1;
     return { postId, newLikes: post.likes, liked: true };
+  },
+
+  async addComment(
+    postId: string,
+    comment: { author: string; handle: string; text: string }
+  ): Promise<SocialComment | null> {
+    const post = socialPostsStore.find((p) => p.id === postId);
+    if (!post) return null;
+    const newComment: SocialComment = {
+      id: `c-${Date.now()}`,
+      author: comment.author,
+      handle: comment.handle,
+      text: comment.text,
+      createdAt: 'Just now',
+    };
+    if (!post.commentsList) {
+      post.commentsList = [];
+    }
+    post.commentsList.push(newComment);
+    post.commentsCount += 1;
+    return newComment;
   },
 };
