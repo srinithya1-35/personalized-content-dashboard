@@ -6,11 +6,14 @@ import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import {
   ALL_CATEGORIES,
   toggleCategory,
+  setCategories,
+  setLanguage,
   resetCategories,
   setFeedLayout,
   setLiveUpdatesEnabled,
   setAutoPlayAudioPreview,
 } from '@/store/slices/preferencesSlice';
+import { SUPPORTED_LANGUAGES, SupportedLanguage } from '@/services/types';
 import { toggleTheme } from '@/store/slices/themeSlice';
 import {
   Settings,
@@ -23,12 +26,16 @@ import {
   Radio,
   Volume2,
   LayoutGrid,
+  Globe,
 } from 'lucide-react';
 
 export default function SettingsPage() {
   const dispatch = useAppDispatch();
   const selectedCategories = useAppSelector(
     (state) => state.preferences.selectedCategories
+  );
+  const selectedLanguage = useAppSelector(
+    (state) => state.preferences.selectedLanguage
   );
   const feedLayout = useAppSelector((state) => state.preferences.feedLayout);
   const liveUpdatesEnabled = useAppSelector(
@@ -40,6 +47,12 @@ export default function SettingsPage() {
   const isDark = useAppSelector((state) => state.theme.isDark);
 
   const [notificationSaved, setNotificationSaved] = useState(false);
+
+  const handleLanguageSelect = (lang: SupportedLanguage) => {
+    dispatch(setLanguage(lang));
+    setNotificationSaved(true);
+    setTimeout(() => setNotificationSaved(false), 1500);
+  };
 
   const handleToggle = (catId: any) => {
     dispatch(toggleCategory(catId));
@@ -148,7 +161,59 @@ export default function SettingsPage() {
           </div>
         </section>
 
-        {/* Section 2: Experience & Display Options */}
+        {/* Section 2: Language & Regional Preferences */}
+        <section className="space-y-4 pt-4 border-t border-neutral-200/50 dark:border-neutral-800">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-bold text-neutral-800 dark:text-neutral-100 flex items-center gap-2">
+                <Globe className="w-4 h-4 text-rose-500" />
+                <span>Language &amp; Regional Content Preference</span>
+              </h2>
+              <p className="text-xs text-neutral-400">
+                Choose your preferred language. News, music tracks, cinema recommendations, and social feeds will adapt to your language choice.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            {SUPPORTED_LANGUAGES.map((lang) => {
+              const isSelected = selectedLanguage === lang.code;
+
+              return (
+                <div
+                  key={lang.code}
+                  onClick={() => handleLanguageSelect(lang.code)}
+                  className={`p-3.5 rounded-2xl border cursor-pointer transition-all duration-200 flex flex-col justify-between gap-2 ${
+                    isSelected
+                      ? 'bg-white dark:bg-charcoal-850 border-rose-400 dark:border-rose-600 shadow-soft ring-2 ring-rose-400/20'
+                      : 'bg-white/40 dark:bg-charcoal-900/40 border-neutral-200/60 dark:border-neutral-800/80 hover:bg-white/70 dark:hover:bg-charcoal-850 opacity-70 hover:opacity-100'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xl">{lang.flag}</span>
+                    <div
+                      className={`w-4 h-4 rounded-full flex items-center justify-center ${
+                        isSelected ? 'bg-rose-500 text-white' : 'border border-neutral-300 dark:border-neutral-700'
+                      }`}
+                    >
+                      {isSelected && <Check className="w-2.5 h-2.5" />}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-neutral-800 dark:text-neutral-100">
+                      {lang.nativeLabel}
+                    </p>
+                    <p className="text-[11px] text-neutral-400">
+                      {lang.label}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Section 3: Experience & Display Options */}
         <section className="space-y-4 pt-4 border-t border-neutral-200/50 dark:border-neutral-800">
           <h2 className="text-base font-bold text-neutral-800 dark:text-neutral-100">
             Interface &amp; Atmosphere

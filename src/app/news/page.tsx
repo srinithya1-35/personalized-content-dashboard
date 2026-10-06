@@ -9,6 +9,7 @@ import CardSkeleton from '@/components/common/CardSkeleton';
 import EmptyState from '@/components/common/EmptyState';
 import ErrorState from '@/components/common/ErrorState';
 import CategoryPills from '@/components/common/CategoryPills';
+import LanguageSelector from '@/components/common/LanguageSelector';
 import { Newspaper, ArrowDown, Loader2 } from 'lucide-react';
 
 export default function NewsPage() {
@@ -18,6 +19,7 @@ export default function NewsPage() {
   const page = useAppSelector((state) => state.content.newsPage);
   const hasMore = useAppSelector((state) => state.content.newsHasMore);
 
+  const selectedLanguage = useAppSelector((state) => state.preferences.selectedLanguage);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
@@ -25,16 +27,18 @@ export default function NewsPage() {
     dispatch(
       fetchNewsSection({
         category: selectedCategory === 'all' ? undefined : selectedCategory,
+        language: selectedLanguage,
         page: 1,
       })
     );
-  }, [selectedCategory, dispatch]);
+  }, [selectedCategory, selectedLanguage, dispatch]);
 
   const handleLoadMore = async () => {
     setIsLoadingMore(true);
     await dispatch(
       fetchNewsSection({
         category: selectedCategory === 'all' ? undefined : selectedCategory,
+        language: selectedLanguage,
         page: page + 1,
       })
     );
@@ -59,6 +63,9 @@ export default function NewsPage() {
               </p>
             </div>
           </div>
+
+          {/* Language Selector Pills */}
+          <LanguageSelector variant="pills" />
         </div>
 
         {/* Category Pills */}

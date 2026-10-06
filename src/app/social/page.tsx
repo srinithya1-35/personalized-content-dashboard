@@ -8,6 +8,7 @@ import SocialCard from '@/components/cards/SocialCard';
 import CardSkeleton from '@/components/common/CardSkeleton';
 import EmptyState from '@/components/common/EmptyState';
 import ErrorState from '@/components/common/ErrorState';
+import LanguageSelector from '@/components/common/LanguageSelector';
 import { Share2, Sparkles, ArrowDown, Loader2 } from 'lucide-react';
 
 export default function SocialPage() {
@@ -16,6 +17,7 @@ export default function SocialPage() {
   const status = useAppSelector((state) => state.content.socialStatus);
   const page = useAppSelector((state) => state.content.socialPage);
   const hasMore = useAppSelector((state) => state.content.socialHasMore);
+  const selectedLanguage = useAppSelector((state) => state.preferences.selectedLanguage);
 
   const [tagFilter, setTagFilter] = useState('all');
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -24,16 +26,18 @@ export default function SocialPage() {
     dispatch(
       fetchSocialSection({
         category: tagFilter === 'all' ? undefined : tagFilter,
+        language: selectedLanguage,
         page: 1,
       })
     );
-  }, [tagFilter, dispatch]);
+  }, [tagFilter, selectedLanguage, dispatch]);
 
   const handleLoadMore = async () => {
     setIsLoadingMore(true);
     await dispatch(
       fetchSocialSection({
         category: tagFilter === 'all' ? undefined : tagFilter,
+        language: selectedLanguage,
         page: page + 1,
       })
     );
@@ -57,6 +61,10 @@ export default function SocialPage() {
                 Pottery studios, flower markets, 35mm film memories, cute pets &amp; artisan creators
               </p>
             </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <LanguageSelector variant="pills" />
           </div>
 
           {/* Theme Filters */}

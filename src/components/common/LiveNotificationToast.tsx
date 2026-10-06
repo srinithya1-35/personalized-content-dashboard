@@ -15,6 +15,7 @@ const LIVE_EVENTS_POOL: ContentItem[] = [
     description: 'Fresh out of the gas reduction kiln! The iron specks formed crystalline stars across the celadon surface 🌸',
     image: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?q=80&w=1200&auto=format&fit=crop',
     category: 'art',
+    language: 'en',
     author: {
       name: 'Aria Thorne',
       handle: '@aria_ceramics',
@@ -32,6 +33,7 @@ const LIVE_EVENTS_POOL: ContentItem[] = [
     description: 'Breakthrough testing results show 92% capacity retention after 3,000 rapid charge cycles at ambient temperatures.',
     image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1200&auto=format&fit=crop',
     category: 'science',
+    language: 'en',
     source: 'MIT Technology Review',
     author: 'Dr. Sarah Lin',
     readingTimeMinutes: 4,
@@ -44,6 +46,7 @@ const LIVE_EVENTS_POOL: ContentItem[] = [
     description: 'Gentle ambient field recordings accompanied by delicate koto harp progressions for evening decompression.',
     image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop',
     category: 'music',
+    language: 'en',
     artist: 'Haruka Sato',
     album: 'Petals on Moss',
     duration: '3:40',

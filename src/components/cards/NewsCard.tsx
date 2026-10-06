@@ -59,11 +59,16 @@ export default function NewsCard({ item }: NewsCardProps) {
           <span>{item.source}</span>
         </div>
 
-        {/* Category Pill */}
-        <div className="absolute bottom-3 left-3.5">
+        {/* Category Pill & Language Badge */}
+        <div className="absolute bottom-3 left-3.5 flex items-center gap-1.5">
           <span className="px-2.5 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-wider bg-rose-500/80 text-white backdrop-blur-sm">
             {item.category}
           </span>
+          {item.language && (
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-black/60 text-neutral-200 backdrop-blur-sm border border-white/20">
+              {item.language.toUpperCase()}
+            </span>
+          )}
         </div>
       </div>
 

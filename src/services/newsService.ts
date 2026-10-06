@@ -1,4 +1,4 @@
-import { NewsContentItem, Category } from './types';
+import { NewsContentItem, Category, SupportedLanguage } from './types';
 import { mockNewsData } from '@/mock/newsData';
 
 const NEWS_API_KEY = process.env.NEXT_PUBLIC_NEWS_API_KEY;
@@ -6,6 +6,7 @@ const NEWS_API_URL = process.env.NEXT_PUBLIC_NEWS_API_URL || 'https://newsapi.or
 
 export interface FetchNewsParams {
   category?: Category | string;
+  language?: SupportedLanguage;
   query?: string;
   page?: number;
   pageSize?: number;
@@ -22,14 +23,16 @@ export interface FetchNewsResult {
 export const newsService = {
   async fetchNews({
     category,
+    language = 'all',
     query,
     page = 1,
     pageSize = 6,
   }: FetchNewsParams = {}): Promise<FetchNewsResult> {
     if (NEWS_API_KEY && NEWS_API_KEY.trim().length > 0 && NEWS_API_KEY !== 'your_news_api_key_here') {
       try {
+        const langParam = language && language !== 'all' ? `&language=${language}` : '';
         const endpoint = query
-          ? `${NEWS_API_URL}/everything?q=${encodeURIComponent(query)}&page=${page}&pageSize=${pageSize}&apiKey=${NEWS_API_KEY}`
+          ? `${NEWS_API_URL}/everything?q=${encodeURIComponent(query)}${langParam}&page=${page}&pageSize=${pageSize}&apiKey=${NEWS_API_KEY}`
           : `${NEWS_API_URL}/top-headlines?country=us${category ? `&category=${category}` : ''}&page=${page}&pageSize=${pageSize}&apiKey=${NEWS_API_KEY}`;
 
         const res = await fetch(endpoint);
@@ -46,6 +49,7 @@ export const newsService = {
             description: art.description || art.content || 'Read the full coverage for comprehensive insights and details.',
             image: art.urlToImage || 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop',
             category: (category as Category) || 'technology',
+            language: (language !== 'all' ? language : 'en') as 'en' | 'hi' | 'kn' | 'te',
             source: art.source?.name || 'Global News',
             author: art.author || 'Editorial Staff',
             readingTimeMinutes: 4,
@@ -68,23 +72,26 @@ export const newsService = {
     }
 
     // Curated fallback with simulated network latency
-    await new Promise((resolve) => setTimeout(resolve, 350));
+    await new Promise((resolve) => setTimeout(resolve, 250));
 
     let filtered = [...mockNewsData];
 
+    // Language filter
+    if (language && language !== 'all') {
+      filtered = filtered.filter((item) => item.language === language);
+    }
+
+    // Category filter
     if (category && category !== 'all') {
-      filtered = filtered.filter(
+      const catFiltered = filtered.filter(
         (item) => item.category.toLowerCase() === category.toLowerCase()
       );
-      if (filtered.length === 0) {
-        // If specific category has no direct mock, return diverse set tagged with category
-        filtered = mockNewsData.slice(0, 4).map((item) => ({
-          ...item,
-          category,
-        }));
+      if (catFiltered.length > 0) {
+        filtered = catFiltered;
       }
     }
 
+    // Query search
     if (query && query.trim()) {
       const q = query.toLowerCase();
       filtered = filtered.filter(

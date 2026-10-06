@@ -1,7 +1,8 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import preferencesReducer, {
   toggleCategory,
   setCategories,
+  setLanguage,
   resetCategories,
   setFeedLayout,
   setLiveUpdatesEnabled,
@@ -10,6 +11,7 @@ import preferencesReducer, {
 describe('preferencesSlice', () => {
   const initialState = {
     selectedCategories: ['technology', 'art'] as any[],
+    selectedLanguage: 'all' as const,
     feedLayout: 'grid' as const,
     autoPlayAudioPreview: false,
     liveUpdatesEnabled: true,
@@ -35,14 +37,27 @@ describe('preferencesSlice', () => {
     expect(nextState.selectedCategories).toEqual(['technology']);
   });
 
-  it('should reset categories to defaults', () => {
+  it('should update selected language preference', () => {
+    const nextStateHi = preferencesReducer(initialState, setLanguage('hi'));
+    expect(nextStateHi.selectedLanguage).toBe('hi');
+
+    const nextStateKn = preferencesReducer(nextStateHi, setLanguage('kn'));
+    expect(nextStateKn.selectedLanguage).toBe('kn');
+
+    const nextStateTe = preferencesReducer(nextStateKn, setLanguage('te'));
+    expect(nextStateTe.selectedLanguage).toBe('te');
+  });
+
+  it('should reset categories and language to defaults', () => {
     const customState = {
       ...initialState,
       selectedCategories: ['sports'] as any[],
+      selectedLanguage: 'hi' as const,
     };
     const nextState = preferencesReducer(customState, resetCategories());
     expect(nextState.selectedCategories.length).toBeGreaterThan(1);
     expect(nextState.selectedCategories).toContain('technology');
+    expect(nextState.selectedLanguage).toBe('all');
   });
 
   it('should set feed layout and live updates', () => {

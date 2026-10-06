@@ -100,10 +100,15 @@ export default function SocialCard({ item }: SocialCardProps) {
           loading="lazy"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-104"
         />
-        <div className="absolute top-2.5 right-2.5">
+        <div className="absolute top-2.5 right-2.5 flex items-center gap-1.5">
           <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-white/80 dark:bg-charcoal-900/80 backdrop-blur-md text-neutral-700 dark:text-neutral-200 shadow-sm capitalize">
             {item.category}
           </span>
+          {item.language && (
+            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-black/60 text-white backdrop-blur-md border border-white/20">
+              {item.language.toUpperCase()}
+            </span>
+          )}
         </div>
       </div>
 

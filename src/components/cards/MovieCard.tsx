@@ -64,6 +64,11 @@ export default function MovieCard({ item }: MovieCardProps) {
           <span className="text-[10px] px-2 py-0.5 rounded-md bg-lavender-500/20 text-lavender-300 font-semibold border border-lavender-500/30">
             {item.genre[0] || 'Cinema'}
           </span>
+          {item.language && (
+            <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-black/60 text-neutral-300 font-bold uppercase border border-neutral-700">
+              {item.language.toUpperCase()}
+            </span>
+          )}
         </div>
       </div>
 

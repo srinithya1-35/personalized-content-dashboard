@@ -30,13 +30,16 @@ export default function UnifiedFeed() {
   const selectedCategories = useAppSelector(
     (state) => state.preferences.selectedCategories
   );
+  const selectedLanguage = useAppSelector(
+    (state) => state.preferences.selectedLanguage
+  );
 
   const [orderedItems, setOrderedItems] = useState<ContentItem[]>([]);
 
-  // Initial fetch when categories change
+  // Initial fetch when categories or language change
   useEffect(() => {
     dispatch(fetchUnifiedFeed({ page: 1, refresh: true }));
-  }, [selectedCategories, dispatch]);
+  }, [selectedCategories, selectedLanguage, dispatch]);
 
   // Sync feedItems with custom order
   useEffect(() => {

@@ -49,9 +49,16 @@ export default function MusicCard({ item }: MusicCardProps) {
           <span>{item.moodTag || '🌸 Made for You'}</span>
         </span>
 
-        <span className="text-[11px] font-mono text-neutral-400">
-          {item.duration}
-        </span>
+        <div className="flex items-center gap-1.5">
+          {item.language && (
+            <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-white/80 dark:bg-charcoal-900/80 font-bold uppercase text-neutral-500 border border-peach-200/50 dark:border-plum-800">
+              {item.language.toUpperCase()}
+            </span>
+          )}
+          <span className="text-[11px] font-mono text-neutral-400">
+            {item.duration}
+          </span>
+        </div>
       </div>
 
       {/* Album Artwork & Vinyl Effect */}

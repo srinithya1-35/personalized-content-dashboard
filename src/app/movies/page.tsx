@@ -8,6 +8,7 @@ import MovieCard from '@/components/cards/MovieCard';
 import CardSkeleton from '@/components/common/CardSkeleton';
 import EmptyState from '@/components/common/EmptyState';
 import ErrorState from '@/components/common/ErrorState';
+import LanguageSelector from '@/components/common/LanguageSelector';
 import { Film, Clapperboard, ArrowDown, Loader2 } from 'lucide-react';
 
 export default function MoviesPage() {
@@ -16,6 +17,7 @@ export default function MoviesPage() {
   const status = useAppSelector((state) => state.content.movieStatus);
   const page = useAppSelector((state) => state.content.moviePage);
   const hasMore = useAppSelector((state) => state.content.movieHasMore);
+  const selectedLanguage = useAppSelector((state) => state.preferences.selectedLanguage);
 
   const [genreFilter, setGenreFilter] = useState('all');
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -24,16 +26,18 @@ export default function MoviesPage() {
     dispatch(
       fetchMoviesSection({
         category: genreFilter === 'all' ? undefined : genreFilter,
+        language: selectedLanguage,
         page: 1,
       })
     );
-  }, [genreFilter, dispatch]);
+  }, [genreFilter, selectedLanguage, dispatch]);
 
   const handleLoadMore = async () => {
     setIsLoadingMore(true);
     await dispatch(
       fetchMoviesSection({
         category: genreFilter === 'all' ? undefined : genreFilter,
+        language: selectedLanguage,
         page: page + 1,
       })
     );
@@ -57,6 +61,10 @@ export default function MoviesPage() {
                 Cinematographic masterpieces, deep space odysseys, slow cinema &amp; TMDB recommendations
               </p>
             </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <LanguageSelector variant="pills" />
           </div>
 
           {/* Genre Filters */}

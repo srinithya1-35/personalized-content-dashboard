@@ -15,6 +15,7 @@ describe('favoritesSlice', () => {
     description: 'A study in calm technology',
     image: 'https://example.com/img.jpg',
     category: 'technology',
+    language: 'en',
     createdAt: '2026-10-06T12:00:00Z',
     source: 'Wired',
   };

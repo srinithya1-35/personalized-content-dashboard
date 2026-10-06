@@ -8,6 +8,7 @@ import MusicCard from '@/components/cards/MusicCard';
 import CardSkeleton from '@/components/common/CardSkeleton';
 import EmptyState from '@/components/common/EmptyState';
 import ErrorState from '@/components/common/ErrorState';
+import LanguageSelector from '@/components/common/LanguageSelector';
 import { Music, Sparkles, Play, ArrowDown, Loader2 } from 'lucide-react';
 
 export default function MusicPage() {
@@ -16,6 +17,7 @@ export default function MusicPage() {
   const status = useAppSelector((state) => state.content.musicStatus);
   const page = useAppSelector((state) => state.content.musicPage);
   const hasMore = useAppSelector((state) => state.content.musicHasMore);
+  const selectedLanguage = useAppSelector((state) => state.preferences.selectedLanguage);
 
   const [moodFilter, setMoodFilter] = useState('all');
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -24,16 +26,18 @@ export default function MusicPage() {
     dispatch(
       fetchMusicSection({
         category: moodFilter === 'all' ? undefined : moodFilter,
+        language: selectedLanguage,
         page: 1,
       })
     );
-  }, [moodFilter, dispatch]);
+  }, [moodFilter, selectedLanguage, dispatch]);
 
   const handleLoadMore = async () => {
     setIsLoadingMore(true);
     await dispatch(
       fetchMusicSection({
         category: moodFilter === 'all' ? undefined : moodFilter,
+        language: selectedLanguage,
         page: page + 1,
       })
     );
@@ -63,6 +67,10 @@ export default function MusicPage() {
                 Delicate tape loops, ambient Rhodes, lo-fi beats &amp; botanical soundscapes with audio preview player
               </p>
             </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <LanguageSelector variant="pills" />
           </div>
 
           {/* Mood / Vibe Filters */}

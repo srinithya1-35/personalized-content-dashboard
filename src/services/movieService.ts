@@ -1,4 +1,4 @@
-import { MovieContentItem, Category } from './types';
+import { MovieContentItem, Category, SupportedLanguage } from './types';
 import { mockMovieData } from '@/mock/movieData';
 
 const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
@@ -7,6 +7,7 @@ const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w780';
 
 export interface FetchMoviesParams {
   category?: Category | string;
+  language?: SupportedLanguage;
   query?: string;
   page?: number;
   pageSize?: number;
@@ -23,15 +24,17 @@ export interface FetchMoviesResult {
 export const movieService = {
   async fetchMovies({
     category,
+    language = 'all',
     query,
     page = 1,
     pageSize = 6,
   }: FetchMoviesParams = {}): Promise<FetchMoviesResult> {
     if (TMDB_API_KEY && TMDB_API_KEY.trim().length > 0 && TMDB_API_KEY !== 'your_tmdb_api_key_here') {
       try {
+        const langParam = language && language !== 'all' ? `&language=${language}-IN` : '';
         const endpoint = query
-          ? `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&page=${page}`
-          : `${TMDB_BASE_URL}/trending/movie/week?api_key=${TMDB_API_KEY}&page=${page}`;
+          ? `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}${langParam}&page=${page}`
+          : `${TMDB_BASE_URL}/trending/movie/week?api_key=${TMDB_API_KEY}${langParam}&page=${page}`;
 
         const res = await fetch(endpoint);
         if (!res.ok) {
@@ -51,6 +54,7 @@ export const movieService = {
               ? `${TMDB_IMAGE_BASE}${m.poster_path}`
               : 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200&auto=format&fit=crop',
             category: (category as Category) || 'movies',
+            language: (language !== 'all' ? language : 'en') as 'en' | 'hi' | 'kn' | 'te',
             rating: m.vote_average ? Math.round(m.vote_average * 10) / 10 : 7.8,
             releaseYear: m.release_date ? parseInt(m.release_date.substring(0, 4), 10) : 2026,
             duration: '2h 10m',
@@ -75,18 +79,23 @@ export const movieService = {
     }
 
     // Curated fallback with simulated latency
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    await new Promise((resolve) => setTimeout(resolve, 250));
 
     let filtered = [...mockMovieData];
 
+    // Language filter
+    if (language && language !== 'all') {
+      filtered = filtered.filter((m) => m.language === language);
+    }
+
     if (category && category !== 'all' && category !== 'movies') {
-      filtered = filtered.filter(
+      const catFiltered = filtered.filter(
         (m) =>
           m.category.toLowerCase() === category.toLowerCase() ||
           m.genre.some((g) => g.toLowerCase() === category.toLowerCase())
       );
-      if (filtered.length === 0) {
-        filtered = mockMovieData.slice(0, 4);
+      if (catFiltered.length > 0) {
+        filtered = catFiltered;
       }
     }
 

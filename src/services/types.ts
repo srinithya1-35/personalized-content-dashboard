@@ -1,5 +1,22 @@
 export type ContentType = 'news' | 'movie' | 'music' | 'social';
 
+export type SupportedLanguage = 'all' | 'en' | 'hi' | 'kn' | 'te';
+
+export interface LanguageOption {
+  code: SupportedLanguage;
+  label: string;
+  nativeLabel: string;
+  flag: string;
+}
+
+export const SUPPORTED_LANGUAGES: LanguageOption[] = [
+  { code: 'all', label: 'All Languages', nativeLabel: 'All Languages', flag: '🌐' },
+  { code: 'en', label: 'English', nativeLabel: 'English', flag: '🇬🇧' },
+  { code: 'hi', label: 'Hindi', nativeLabel: 'हिन्दी', flag: '🇮🇳' },
+  { code: 'kn', label: 'Kannada', nativeLabel: 'ಕನ್ನಡ', flag: '🇮🇳' },
+  { code: 'te', label: 'Telugu', nativeLabel: 'తెలుగు', flag: '🇮🇳' },
+];
+
 export type Category =
   | 'technology'
   | 'sports'
@@ -21,6 +38,7 @@ export interface BaseContentItem {
   description: string;
   image: string;
   category: Category | string;
+  language: 'en' | 'hi' | 'kn' | 'te';
   url?: string;
   createdAt: string;
   isFavorite?: boolean;
@@ -71,6 +89,7 @@ export type ContentItem =
 
 export interface UserPreferences {
   categories: Category[];
+  selectedLanguage: SupportedLanguage;
   darkMode: boolean;
   compactView: boolean;
   soundEffects: boolean;

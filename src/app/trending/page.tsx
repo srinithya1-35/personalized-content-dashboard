@@ -13,14 +13,13 @@ export default function TrendingPage() {
   const dispatch = useAppDispatch();
   const trendingItems = useAppSelector((state) => state.content.trendingItems);
   const status = useAppSelector((state) => state.content.trendingStatus);
+  const selectedLanguage = useAppSelector((state) => state.preferences.selectedLanguage);
 
   const [filterType, setFilterType] = useState<'all' | 'news' | 'movie' | 'music' | 'social'>('all');
 
   useEffect(() => {
-    if (trendingItems.length === 0) {
-      dispatch(fetchTrendingSection());
-    }
-  }, [trendingItems.length, dispatch]);
+    dispatch(fetchTrendingSection());
+  }, [selectedLanguage, dispatch]);
 
   const filteredItems = trendingItems.filter((item) => {
     if (filterType === 'all') return true;

@@ -6,6 +6,7 @@ import {
   MusicContentItem,
   SocialContentItem,
   Category,
+  SupportedLanguage,
 } from '@/services/types';
 import { newsService } from '@/services/newsService';
 import { movieService } from '@/services/movieService';
@@ -113,16 +114,17 @@ export const fetchUnifiedFeed = createAsyncThunk(
   async (options: { page?: number; refresh?: boolean } = {}, { getState, rejectWithValue }) => {
     const state = getState() as RootState;
     const categories = state.preferences.selectedCategories;
+    const language = state.preferences.selectedLanguage;
     const primaryCategory = categories[0] || 'technology';
     const secondaryCategory = categories[1] || 'art';
     const page = options.page || 1;
 
     try {
       const [newsRes, movieRes, musicRes, socialRes] = await Promise.all([
-        newsService.fetchNews({ category: primaryCategory, page, pageSize: 3 }),
-        movieService.fetchMovies({ category: secondaryCategory, page, pageSize: 3 }),
-        musicService.fetchMusic({ category: categories[2] || 'music', page, pageSize: 3 }),
-        socialService.fetchSocial({ category: categories[3] || 'art', page, pageSize: 3 }),
+        newsService.fetchNews({ category: primaryCategory, language, page, pageSize: 3 }),
+        movieService.fetchMovies({ category: secondaryCategory, language, page, pageSize: 3 }),
+        musicService.fetchMusic({ category: categories[2] || 'music', language, page, pageSize: 3 }),
+        socialService.fetchSocial({ category: categories[3] || 'art', language, page, pageSize: 3 }),
       ]);
 
       const merged = interleaveContent(
@@ -154,10 +156,16 @@ export const fetchMoreFeed = createAsyncThunk(
 
 export const fetchNewsSection = createAsyncThunk(
   'content/fetchNewsSection',
-  async (params: { category?: Category | string; page?: number } = {}, { rejectWithValue }) => {
+  async (
+    params: { category?: Category | string; language?: SupportedLanguage; page?: number } = {},
+    { getState, rejectWithValue }
+  ) => {
+    const state = getState() as RootState;
+    const lang = params.language || state.preferences.selectedLanguage;
     try {
       const res = await newsService.fetchNews({
         category: params.category,
+        language: lang,
         page: params.page || 1,
         pageSize: 6,
       });
@@ -170,10 +178,16 @@ export const fetchNewsSection = createAsyncThunk(
 
 export const fetchMoviesSection = createAsyncThunk(
   'content/fetchMoviesSection',
-  async (params: { category?: Category | string; page?: number } = {}, { rejectWithValue }) => {
+  async (
+    params: { category?: Category | string; language?: SupportedLanguage; page?: number } = {},
+    { getState, rejectWithValue }
+  ) => {
+    const state = getState() as RootState;
+    const lang = params.language || state.preferences.selectedLanguage;
     try {
       const res = await movieService.fetchMovies({
         category: params.category,
+        language: lang,
         page: params.page || 1,
         pageSize: 6,
       });
@@ -186,10 +200,16 @@ export const fetchMoviesSection = createAsyncThunk(
 
 export const fetchMusicSection = createAsyncThunk(
   'content/fetchMusicSection',
-  async (params: { category?: Category | string; page?: number } = {}, { rejectWithValue }) => {
+  async (
+    params: { category?: Category | string; language?: SupportedLanguage; page?: number } = {},
+    { getState, rejectWithValue }
+  ) => {
+    const state = getState() as RootState;
+    const lang = params.language || state.preferences.selectedLanguage;
     try {
       const res = await musicService.fetchMusic({
         category: params.category,
+        language: lang,
         page: params.page || 1,
         pageSize: 6,
       });
@@ -202,10 +222,16 @@ export const fetchMusicSection = createAsyncThunk(
 
 export const fetchSocialSection = createAsyncThunk(
   'content/fetchSocialSection',
-  async (params: { category?: Category | string; page?: number } = {}, { rejectWithValue }) => {
+  async (
+    params: { category?: Category | string; language?: SupportedLanguage; page?: number } = {},
+    { getState, rejectWithValue }
+  ) => {
+    const state = getState() as RootState;
+    const lang = params.language || state.preferences.selectedLanguage;
     try {
       const res = await socialService.fetchSocial({
         category: params.category,
+        language: lang,
         page: params.page || 1,
         pageSize: 6,
       });
@@ -218,13 +244,15 @@ export const fetchSocialSection = createAsyncThunk(
 
 export const fetchTrendingSection = createAsyncThunk(
   'content/fetchTrendingSection',
-  async (_, { rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
+    const state = getState() as RootState;
+    const language = state.preferences.selectedLanguage;
     try {
       const [newsRes, movieRes, musicRes, socialRes] = await Promise.all([
-        newsService.fetchNews({ pageSize: 2 }),
-        movieService.fetchMovies({ pageSize: 2 }),
-        musicService.fetchMusic({ pageSize: 2 }),
-        socialService.fetchSocial({ pageSize: 2 }),
+        newsService.fetchNews({ language, pageSize: 2 }),
+        movieService.fetchMovies({ language, pageSize: 2 }),
+        musicService.fetchMusic({ language, pageSize: 2 }),
+        socialService.fetchSocial({ language, pageSize: 2 }),
       ]);
 
       const trendingList = [
@@ -287,7 +315,6 @@ export const contentSlice = createSlice({
         if (action.payload.isRefresh) {
           state.feedItems = action.payload.items;
         } else {
-          // Avoid duplicate IDs
           const existingIds = new Set(state.feedItems.map((item) => item.id));
           const newItems = action.payload.items.filter((item) => !existingIds.has(item.id));
           state.feedItems = [...state.feedItems, ...newItems];

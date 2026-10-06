@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { toggleTheme } from '@/store/slices/themeSlice';
 import { setSearchModalOpen } from '@/store/slices/searchSlice';
 import { setProfileModalOpen } from '@/store/slices/userSlice';
+import LanguageSelector from './LanguageSelector';
 import {
   Search,
   Moon,
@@ -72,8 +73,11 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
           </button>
         </div>
 
-        {/* Right: Actions (Theme, Favorites counter, Notification, Profile) */}
+        {/* Right: Actions (Language, Theme, Favorites counter, Notification, Profile) */}
         <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* Language Selector Dropdown */}
+          <LanguageSelector />
+
           {/* Quick link to Favorites with Counter */}
           <Link
             href="/favorites"

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Category } from '@/services/types';
+import { Category, SupportedLanguage } from '@/services/types';
 import { storageService } from '@/services/storageService';
 
 export const ALL_CATEGORIES: { id: Category; label: string; icon: string; description: string }[] = [
@@ -29,6 +29,7 @@ const DEFAULT_CATEGORIES: Category[] = [
 
 interface PreferencesState {
   selectedCategories: Category[];
+  selectedLanguage: SupportedLanguage;
   feedLayout: 'grid' | 'masonry' | 'compact';
   autoPlayAudioPreview: boolean;
   liveUpdatesEnabled: boolean;
@@ -38,6 +39,10 @@ const initialState: PreferencesState = {
   selectedCategories: storageService.getItem<Category[]>(
     `${STORAGE_KEY}_categories`,
     DEFAULT_CATEGORIES
+  ),
+  selectedLanguage: storageService.getItem<SupportedLanguage>(
+    `${STORAGE_KEY}_language`,
+    'all'
   ),
   feedLayout: storageService.getItem<'grid' | 'masonry' | 'compact'>(
     `${STORAGE_KEY}_layout`,
@@ -60,7 +65,6 @@ export const preferencesSlice = createSlice({
     toggleCategory: (state, action: PayloadAction<Category>) => {
       const cat = action.payload;
       if (state.selectedCategories.includes(cat)) {
-        // Keep at least one category selected
         if (state.selectedCategories.length > 1) {
           state.selectedCategories = state.selectedCategories.filter((c) => c !== cat);
         }
@@ -75,9 +79,15 @@ export const preferencesSlice = createSlice({
         storageService.setItem(`${STORAGE_KEY}_categories`, state.selectedCategories);
       }
     },
+    setLanguage: (state, action: PayloadAction<SupportedLanguage>) => {
+      state.selectedLanguage = action.payload;
+      storageService.setItem(`${STORAGE_KEY}_language`, state.selectedLanguage);
+    },
     resetCategories: (state) => {
       state.selectedCategories = DEFAULT_CATEGORIES;
+      state.selectedLanguage = 'all';
       storageService.setItem(`${STORAGE_KEY}_categories`, DEFAULT_CATEGORIES);
+      storageService.setItem(`${STORAGE_KEY}_language`, 'all');
     },
     setFeedLayout: (state, action: PayloadAction<'grid' | 'masonry' | 'compact'>) => {
       state.feedLayout = action.payload;
@@ -97,6 +107,7 @@ export const preferencesSlice = createSlice({
 export const {
   toggleCategory,
   setCategories,
+  setLanguage,
   resetCategories,
   setFeedLayout,
   setLiveUpdatesEnabled,

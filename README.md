@@ -36,12 +36,21 @@ A modern, aesthetic, and responsive personalized content dashboard built with **
 - Lifestyle inspiration spanning pottery, slow crafts, floral design, 35mm film photography, and studio desks.
 - Interactive likes with animated heart feedback and hashtag filters.
 
-### 6. User Preferences & Settings
+### 6. Multi-Language Content Preference (English, Hindi, Kannada, Telugu)
+- **Direct Regional Content Filtering:** Select your language preference in the header or settings.
+- News, cinema reels, cozy music drops, and social feeds dynamically filter to display authentic localized content in:
+  - 🇬🇧 **English (`en`)**
+  - 🇮🇳 **हिन्दी / Hindi (`hi`)**
+  - 🇮🇳 **ಕನ್ನಡ / Kannada (`kn`)**
+  - 🇮🇳 **తెలుగు / Telugu (`te`)**
+- Each content card highlights its language attribution badge (`EN`, `HI`, `KN`, `TE`), with persistent preference saved across sessions.
+
+### 7. User Preferences & Settings
 - Select from 12 distinct realms: *Technology, Movies, Music, Art, Lifestyle, Fitness, Travel, Fashion, Science, Finance, Sports, Pop Culture*.
-- Instant persistence to browser `localStorage` through Redux Toolkit.
+- Configure language and layout preferences with instant persistence to browser `localStorage` through Redux Toolkit.
 - Live feed update pulse simulator toggle (Section 31 Bonus).
 
-### 7. Global Debounced Search
+### 8. Global Debounced Search
 - Keyboard shortcut `⌘K` or `Ctrl+K`.
 - 400ms input debounce to prevent redundant network invocations.
 - Results segmented into 📰 News, 🎬 Movies, 🎵 Music, and 📱 Social.

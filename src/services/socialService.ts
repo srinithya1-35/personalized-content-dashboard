@@ -1,8 +1,9 @@
-import { SocialContentItem, Category } from './types';
+import { SocialContentItem, Category, SupportedLanguage } from './types';
 import { mockSocialData } from '@/mock/socialData';
 
 export interface FetchSocialParams {
   category?: Category | string;
+  language?: SupportedLanguage;
   query?: string;
   page?: number;
   pageSize?: number;
@@ -22,20 +23,26 @@ let socialPostsStore = [...mockSocialData];
 export const socialService = {
   async fetchSocial({
     category,
+    language = 'all',
     query,
     page = 1,
     pageSize = 6,
   }: FetchSocialParams = {}): Promise<FetchSocialResult> {
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    await new Promise((resolve) => setTimeout(resolve, 250));
 
     let filtered = [...socialPostsStore];
 
+    // Language filter
+    if (language && language !== 'all') {
+      filtered = filtered.filter((s) => s.language === language);
+    }
+
     if (category && category !== 'all') {
-      filtered = filtered.filter(
+      const catFiltered = filtered.filter(
         (s) => s.category.toLowerCase() === category.toLowerCase()
       );
-      if (filtered.length === 0) {
-        filtered = socialPostsStore.slice(0, 4);
+      if (catFiltered.length > 0) {
+        filtered = catFiltered;
       }
     }
 
